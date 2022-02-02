@@ -3,9 +3,9 @@ import { Link } from "react-router-dom";
 import LoginModal from "./login";
 export const Navbar = () => {
   return (
-    <nav className="navbar " style={{ backgroundColor: "#4ECDC4" }}>
+    <nav className="navbar  text-secondary shadow-2-strong">
       <div className="container-fluid ">
-        <span className="navbar-brand mb-0 h1">Vecinal Norte 3</span>
+        <h2>Vecinal Norte 3</h2>
 
         <div className="ml-auto mx-5">
           <LoginModal />
