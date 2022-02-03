@@ -7,8 +7,11 @@ const LoginModal = () => {
 
   return (
     <>
-      <Button variant="warning text-light" onClick={() => setLgShow(true)}>
-        Iniciar Sesión
+      <Button
+        variant="success text-light btn-lg"
+        onClick={() => setLgShow(true)}
+      >
+        Acceso Funcionarias
       </Button>
 
       <Modal

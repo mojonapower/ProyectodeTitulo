@@ -6,6 +6,7 @@ import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import Biblioteca from "./pages/biblioteca";
+import { VistaFamilinea } from "./pages/familinea";
 
 import injectContext from "./store/appContext";
 
@@ -22,6 +23,7 @@ const Layout = () => {
     <div>
       <BrowserRouter basename={basename}>
         <ScrollToTop>
+          <Navbar />
           <Switch>
             <Route exact path="/">
               <Home />
@@ -29,8 +31,8 @@ const Layout = () => {
             <Route exact path="/recursos">
               <Biblioteca />
             </Route>
-            <Route exact path="/single/:theid">
-              <Single />
+            <Route exact path="/familinea">
+              <VistaFamilinea />
             </Route>
             <Route>
               <h1>Not found!</h1>

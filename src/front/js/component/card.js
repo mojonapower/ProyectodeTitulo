@@ -1,23 +1,20 @@
 import React from "react";
 
-const Card = () => (
+const Card = ({ texto, titulo, variantBoton, img }) => (
   <div
-    className="card border-0 text-center mx-5 bg-transparent "
-    style={{ width: "18rem" }}
+    className="card  border-0 text-center  bg-transparent"
+    style={{ width: "18rem", height: "450px" }}
   >
-    <img
-      src="https://via.placeholder.com/100"
-      className="card-img-top  rounded-circle"
-      alt="..."
-    />
+    <img src={img} className="card-img-top w-50" alt="..." />
     <div className="card-body">
-      <h5 className="card-title">Card title</h5>
-      <p className="card-text">
-        Some quick example text to build on the card title and make up the bulk
-        of the card's content.
-      </p>
-      <a href="#" className="btn btn-primary">
-        Go somewhere
+      <h5 className="card-title">
+        <bold>{titulo}</bold>
+      </h5>
+      <p className="card-text">{texto}</p>
+    </div>
+    <div className="card-footer border-0 bg-transparent">
+      <a href="#" className={"btn  btn-outline-" + variantBoton}>
+        "Leer Más"
       </a>
     </div>
   </div>
