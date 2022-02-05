@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 
 export const Footer = () => (
-  <footer className="footer  mt-5 mb-0 py-3 text-center ">
-    <p>aca estara no se, el final</p>
+  <footer className="footer mt-auto py-3 bg-light">
+    <div className="container">
+      <span className="text-muted">Place sticky footer content here.</span>
+    </div>
   </footer>
 );

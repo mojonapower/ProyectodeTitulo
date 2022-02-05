@@ -8,7 +8,7 @@ export const Polaroid = ({ img }) => {
           src={img}
           className="card-img-top"
           alt="..."
-          style={{ height: "300px" }}
+          style={{ width: "300px" }}
         />
         <div className="card-body">
           <h5 className="card-title text-center">Card title</h5>

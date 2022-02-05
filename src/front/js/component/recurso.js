@@ -1,8 +1,9 @@
 import React from "react";
 
-const Material = ({ categoria }) => {
+const Material = ({ filtro, tipoDoc }) => {
   let documentos = [
     {
+
       tipo: "Referente Curricular",
       nombre: " Referente Curricular",
       url: "https://www.integra.cl/wp-content/uploads/2019/09/REFERENTE_CURRICULAR_202019_compressed.pdf",
@@ -20,33 +21,45 @@ const Material = ({ categoria }) => {
   ];
   return (
     <div className="my-5 p-5 ">
-      <div className="">
-        {documentos.map((objeto, index) => {
-          return (
-            <div key={index} className="card col-6">
-              <div className="row">
-                <div className="col-3">
-                  <img
-                    className="w-50"
-                    src="https://cdn-icons.flaticon.com/png/512/6194/premium/6194617.png?token=exp=1643667744~hmac=f1a3be1e78a00c0bab88c658915f711d"
-                  />
-                </div>
 
-                <div className="col">
-                  <h2>{objeto.nombre}</h2>
-                  <p> Categoria: {objeto.tipo}</p>
-                  <a
-                    href={objeto.url}
-                    className="btn btn-success"
-                    target="_blank"
-                  >
-                    {" "}
-                    Ir al Recurso
-                  </a>
+      <div className="list-group col">
+        {documentos.map((objeto, index) => {
+          if (tipoDoc != 'todo') {
+            if (tipoDoc === objeto.tipo) {
+              return (
+                <div className="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+                  <img src="https://cdn-icons-png.flaticon.com/512/337/337946.png" alt="twbs" width="32" height="32" className="rounded-circle flex-shrink-0" />
+                  <div className="d-flex gap-2 w-100 justify-content-between">
+                    <div>
+                      <h6 className="mb-0">{objeto.nombre}</h6>
+                      <p className="mb-0 opacity-75">{objeto.tipo}</p>
+                    </div>
+                    <a href={objeto.url} target="blank" className="btn btn-outline-warning ">
+                      <i className="fas fa-eye"></i>
+                    </a >
+                  </div>
+                </div>
+              );
+            }
+          }
+          else {
+            return (
+              <div className="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+                <img src="https://cdn-icons-png.flaticon.com/512/337/337946.png" alt="twbs" width="32" height="32" className="rounded-circle flex-shrink-0" />
+                <div className="d-flex gap-2 w-100 justify-content-between">
+                  <div>
+                    <h6 className="mb-0">{objeto.nombre}</h6>
+                    <p className="mb-0 opacity-75">{objeto.tipo}</p>
+                  </div>
+                  <a href={objeto.url} target="blank" className="btn btn-outline-warning ">
+                    <i className="fas fa-eye"></i>
+                  </a >
                 </div>
               </div>
-            </div>
-          );
+            );
+          }
+
+
         })}
       </div>
     </div>
