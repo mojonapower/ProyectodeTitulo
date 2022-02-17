@@ -5,6 +5,9 @@ const LoginModal = () => {
   const [smShow, setSmShow] = useState(false);
   const [lgShow, setLgShow] = useState(false);
 
+
+
+
   return (
     <>
       <Button
@@ -61,7 +64,9 @@ const LoginModal = () => {
                 Check me out
               </label>
             </div>
-            <button type="submit" className="btn btn-primary">
+            <button type="submit" onClick={() => {
+              sessionStorage.setItem('loged', true);
+            }} className="btn btn-primary">
               Submit
             </button>
           </form>

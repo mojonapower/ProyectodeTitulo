@@ -1,0 +1,20 @@
+ 
+ DOCUMENTOS(prueba)
+ [
+				{
+
+					tipo: "Referente Curricular",
+					nombre: " Referente Curricular",
+					url: "https://www.integra.cl/wp-content/uploads/2019/09/REFERENTE_CURRICULAR_202019_compressed.pdf",
+				},
+				{
+					tipo: "Material Educativo",
+					nombre: "Catalogo Materiales Educativos",
+					url: "https://www.integra.cl/wp-content/files_mf/1604500017OK_Catalogo_materiales_Cedoc_octubre_2020_VF.pdf",
+				},
+				{
+					tipo: "Material",
+					nombre: "Más Sanos, Más seguros",
+					url: "https://www.integra.cl/wp-content/files_mf/1583506007INTEGRA_MasSanosySeguros_baja1.pdf",
+				},
+			]

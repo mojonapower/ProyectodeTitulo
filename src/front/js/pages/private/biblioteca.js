@@ -1,13 +1,32 @@
-import React, { useState, useEffect } from "react";
-import Material from "../component/recurso";
-import biblioteca from "../../img/backgrounds/recursos.png";
-
-
+import React, { useState, useEffect, useContext } from "react";
+import Material from "../../component/recurso";
+import biblioteca from "../../../img/backgrounds/recursos.png";
+import { Button, Modal } from "react-bootstrap";
+import { Upload } from "../../component/upload"
+import { Context } from "../../store/appContext";
 
 const Biblioteca = () => {
+
+  const { store, actions } = useContext(Context);
+
   const [documento, setDocumento] = useState('todo') //tipo documento
   const [nivel, setNivel] = useState([]) //nivel educativo
   const [nombre, setNombre] = useState('')// nombre del documento
+
+  const [url, setUrl] = useState(''); //url del documento subido desde el componente UPLOAD
+  //modal
+
+
+
+  //variables de estado de formulario dentro del componente Upload
+  const [formulario, setFormulario] = useState({
+    categoria: '',
+    nivel: [],
+    nombre: "",
+    propietario: 'Daniela Millán',
+    url: "",
+  })
+
 
   useEffect(() => {
     console.log(documento, nivel, nombre)
@@ -17,32 +36,38 @@ const Biblioteca = () => {
   }, [documento, nivel, nombre])
   return (
     <>
-      <div className="container-fluid" style={{
-        background: `url(${biblioteca})`,
-        paddingTop: "150px",
-        backgroundRepeat: "no-repeat",
-      }}>
+      <>
+        <div className="container-fluid" style={{
+          background: `url(${biblioteca})`,
+          paddingTop: "150px",
+          backgroundRepeat: "no-repeat",
+        }}>
 
-        <div className="row d-flex justify-content-end my-5 mx-5">
-          <p className=" col-6  my-5">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
-        </div>
+          <div className="row d-flex justify-content-end my-5 mx-5">
+            <p className=" col-6  my-5">"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</p>
+            <div className="row">
 
-        <div className="container-fluid mt-5">
-          <div className="row my-5">
-            <div className="col my-auto mx-5 ">
-              <Filtros
-                nivel={nivel} setNivel={setNivel} setDocumento={setDocumento} setNombre={setNombre} nombre={nombre}
-              />
+
             </div>
-            <div className="col-8 my-5">
-              <Material nivel={nivel} tipoDoc={documento} nombre={nombre} />
-            </div>
+          </div>
 
+
+          <div className="container-fluid mt-5">
+            <div className="row my-5">
+              <div className="col-5 my-5 ms-5  ">
+                <Filtros
+                  nivel={nivel} setNivel={setNivel} setDocumento={setDocumento} setNombre={setNombre} nombre={nombre}
+                />
+              </div>
+              <div className="col my-5">
+                <Material nivel={nivel} tipoDoc={documento} nombre={nombre} />
+              </div>
+
+            </div>
           </div>
         </div>
-      </div>
 
-
+      </>
     </>
   );
 };
@@ -60,7 +85,7 @@ const Filtros = ({ nivel, setNivel, setDocumento, setNombre, nombre }) => {
     <>
       <div className="row my-5">
         <form>
-          <div class="row mb-3">
+          <div class="row my-5 mb-3">
             <label for="inputEmail3" class="col-sm col-form-label">Buscar por nombre</label>
             <div class="col-sm-7">
               <input type="email" class="form-control " id="inputEmail3" onChange={(e) => { setDocumento(e.target.value) }} />
