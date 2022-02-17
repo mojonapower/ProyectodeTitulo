@@ -43,8 +43,19 @@ class Anuncio(db.Model):
            
         }
 
-        
-"""
+class Sms(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    destinatario = db.Column(db.String(15), unique=True, nullable=False)
+    cuerpo =db.Column(db.String(1500), unique=False, nullable=False)
+    funcionarioId = db.Column(db.Integer, db.ForeignKey('funcionario.id'))
+
+    def serialize(self):
+        return {
+            "id": self.id,
+            "destinatario": self.destinatario,
+            "cuerpo": self.cuerpo,  
+        }
+
 class Funcionario(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
@@ -55,8 +66,7 @@ class Funcionario(db.Model):
     telefono = db.Column(db.String(15), unique=True, nullable=False)#
     direccion = db.Column(db.String(15), unique=True, nullable=False)#
     rol = db.Column(db.String(30), unique=True, nullable=False)#
-    def __repr__(self):
-        return '<Funcionario %r>' % self.nombre
+    autor = db.relationship("Sms")
 
     def serialize(self):
         return {
@@ -76,10 +86,48 @@ class Ninio(db.Model):
     #apoderado
     fechanac = db.Column(db.Date, unique=False, nullable=False)
     nivelEducativo = db.Column(db.String(80), unique=False, nullable=False)
+    descripcion = db.Column(db.String(1000), unique=False, nullable=False)
+    nee = db.Column(db.Boolean, unique=False, nullable=False)
+    parent_id = db.Column(db.Integer, db.ForeignKey('apoderado.id'))
+    
+    def serialize(self):
+        return {
+            "id": self.id,
+            "nombre": self.nombre,
+            "apellido": self.apellido,
+            "fechanac": self.fechanac,
+            "nivelEducativo": self.nivelEducativo,
+            "nee": self.nee,
+            "descripcion": self.descripcion,
+            "parent_id": self.parent_id
+
+            # do not serialize the password, its a security breach
+        }
+
 
 class Apoderado(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nombre = db.Column(db.String(80), unique=False, nullable=False)
     apellido = db.Column(db.String(80), unique=False, nullable=False)
+    genero = db.Column(db.String(80), unique=False, nullable=False)
+    nacionalidad = db.Column(db.String(80), unique=False, nullable=False)
+    ocupacion = db.Column(db.String(80), unique=False, nullable=False)
+    maxNivelEducativo = db.Column(db.String(80), unique=False, nullable=False)
+    fechanac = db.Column(db.Date, unique=False, nullable=False)
+    apoderado = db.relationship("Ninio")
 
-    """
+    def serialize(self):
+        return {
+            "id": self.id,
+            "nombre": self.nombre,
+            "genero": self.genero,
+            "nacionalidad": self.nacionalidad,
+            "apellido": self.apellido,
+            "fechanac": self.fechanac,
+            "maxNivelEducativo": self.maxNivelEducativo,
+            "ocupacion": self.ocupacion,
+            # do not serialize the password, its a security breach
+        }
+
+
+  

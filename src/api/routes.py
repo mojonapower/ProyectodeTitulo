@@ -5,9 +5,12 @@ from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, Documento, Anuncio
 from api.utils import generate_sitemap, APIException
 from datetime import datetime
+import messagebird
+
 api = Blueprint('api', __name__)
 
-
+#sms
+ACCESS_KEY = "a6n40HI9n3Mc12FkDsWnqGD3f"
 @api.route('/hello', methods=['POST', 'GET'])
 def handle_hello():
 
@@ -54,3 +57,16 @@ def addAnnoucement():
     db.session.add(newAnnoucement)
     db.session.commit()
     return jsonify(body), 200
+
+@api.route('/sendSMS', methods=['POST'])
+def sms():
+    body = request.get_json()
+    client = messagebird.Client(ACCESS_KEY)
+    message = client.message_create(
+          'TestMessage',
+          body['numero'],
+          body['mensaje'],
+          { 'reference' : 'Foobar' }
+      )
+    body["status"]= 200
+    return jsonify(body),200
