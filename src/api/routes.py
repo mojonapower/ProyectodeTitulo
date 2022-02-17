@@ -1,25 +1,14 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
+import os
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, Documento, Anuncio
+from api.models import db, Documento, Anuncio,Sms
 from api.utils import generate_sitemap, APIException
 from datetime import datetime
 import messagebird
 
 api = Blueprint('api', __name__)
-
-#sms
-ACCESS_KEY = "a6n40HI9n3Mc12FkDsWnqGD3f"
-@api.route('/hello', methods=['POST', 'GET'])
-def handle_hello():
-
-    response_body = {
-        "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
-    }
-
-    return jsonify(response_body), 200
-
 
 @api.route('/getAllDocument', methods=['GET'])
 def returnDocumentos():
@@ -61,12 +50,16 @@ def addAnnoucement():
 @api.route('/sendSMS', methods=['POST'])
 def sms():
     body = request.get_json()
-    client = messagebird.Client(ACCESS_KEY)
+    client = messagebird.Client(os.getenv("ACCESS_KEY"))#disponible en .env
     message = client.message_create(
           'TestMessage',
           body['numero'],
           body['mensaje'],
           { 'reference' : 'Foobar' }
       )
+    saveSms = Sms(destinatario=body['numero'], cuerpo=body['mensaje'], funcionarioId=body['funcionarioId'])
+    db.session.add(saveSms)
+    db.session.commit()
+
     body["status"]= 200
     return jsonify(body),200
