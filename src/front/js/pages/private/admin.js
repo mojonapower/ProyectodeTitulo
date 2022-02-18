@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { Row, Col, Tab, ListGroup } from 'react-bootstrap'
 import logo from '../../../img/logo.png'
+import construccion from '../../../img/construccion.png'
 import nombre from '../../../img/iconos/texto.png'
 import { Upload } from "../../component/upload"
 import { AnounceCreator } from "../../component/crearAnuncio"
-
+import { Mensaje } from "../../component/mensaje"
 export const Admin = () => {
     return (<div className='container-fluid p-5'>
 
@@ -48,7 +49,7 @@ const Sidebar = () => {
                 <Col sm={8}>
                     <Tab.Content>
                         <Tab.Pane eventKey="#link1">
-                            En construccion
+                            <img src={construccion}></img>
                         </Tab.Pane>
                         <Tab.Pane eventKey="#link2">
                             <Contenido />
@@ -57,7 +58,7 @@ const Sidebar = () => {
                             <Anuncios />
                         </Tab.Pane>
                         <Tab.Pane eventKey="#link4">
-                            Mensajes
+                            <Mensajes />
                         </Tab.Pane>
                         <Tab.Pane eventKey="#link5">
                             Miembros
@@ -77,6 +78,12 @@ const Contenido = () => {
 const Anuncios = () => {
     return (
         <AnounceCreator />
+    )
+
+}
+const Mensajes = () => {
+    return (
+        <Mensaje />
     )
 
 }
