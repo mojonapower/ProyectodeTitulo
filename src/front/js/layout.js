@@ -43,7 +43,6 @@ const Layout = () => {
               <VistaFamilinea />
             </Route>
             <Route exact path="/admin">
-
               <Admin />
             </Route>
             <Route>

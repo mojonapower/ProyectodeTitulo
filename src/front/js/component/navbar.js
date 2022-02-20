@@ -47,6 +47,10 @@ export const Navbar = () => {
             Nuestro Jardín
           </button>
         </Link>
+        <Link to={"/recursos"}>
+          <a className="btn btn-warning btn-lg text-white" style={{ background: "#FF5733" }}>Recursos
+          </a>
+        </Link>
         {showLogin == false ?
 
           <div className="dropdown">
@@ -56,27 +60,24 @@ export const Navbar = () => {
               Administrador
             </button>
             <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-              <Link to={"/recursos"}>
-                <li><a className="dropdown-item" href="#">Recursos
-                </a></li>
-              </Link>
+
               <Link to={"/admin"}>
-                <li><a className="dropdown-item" href="#">Panel de Administrador
+                <li><a className="dropdown-item" >Panel de Administrador
                 </a></li>
               </Link>
-              <li><a className="dropdown-item" href="#">Something else here</a></li>
+              <li><a className="dropdown-item" onClick={() => {
+
+                setShowLogin(true)
+                sessionStorage.setItem('loged', false)
+                history.push("/");
+                handleShow()
+
+              }} ><i class="fa-solid fa-arrow-right-from-bracket"></i>Cerrar Sesión</a></li>
             </ul>
           </div>
           : ''}
         <div className="ml-auto mx-5">
-          {showLogin ? <LoginModal /> : <button onClick={() => {
-
-            setShowLogin(true)
-            sessionStorage.setItem('loged', false)
-            history.push("/");
-            handleShow()
-
-          }} className="btn btn-danger">Cerrar Sesión</button>
+          {showLogin ? <LoginModal /> : ''
 
           }
         </div>

@@ -17,13 +17,13 @@ export const AnounceCreator = () => {
     }
     const addTitulo = (e) => {
         let formulario = form;
-        formulario.titulo.push(e.target.value)
+        formulario.titulo = e.target.value
         setForm(formulario)
 
     }
     const addDetalle = (e) => {
         let formulario = form;
-        formulario.detalle.push(e.target.value)
+        formulario.detalle = e.target.value
         setForm(formulario)
 
     }

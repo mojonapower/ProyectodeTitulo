@@ -1,13 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Button, Modal } from "react-bootstrap";
+import { Context } from "../store/appContext";
+
 
 const LoginModal = () => {
-  const [smShow, setSmShow] = useState(false);
+  const { store, actions } = useContext(Context);
   const [lgShow, setLgShow] = useState(false);
+  const [form, setForm] = useState({
+    mail: '',
+    password: ''
+  })
 
-
-
-
+  const handleSubmit = () => {
+    actions.login() == true ? sessionStorage.setItem('loged', true) :
+      sessionStorage.setItem('loged', false)
+  }
   return (
     <>
       <Button
@@ -29,10 +36,14 @@ const LoginModal = () => {
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="mb-3">
-              <label for="exampleInputEmail1" className="form-label">
-                Email address
+              <label for="exampleInputEmail1" className="form-label" onChange={(e) => {
+                let data = form;
+                data.mail = e.target.value
+                setForm(data)
+              }}>
+                Correo Electrónico
               </label>
               <input
                 type="email"
@@ -41,12 +52,16 @@ const LoginModal = () => {
                 aria-describedby="emailHelp"
               />
               <div id="emailHelp" className="form-text">
-                We'll never share your email with anyone else.
+                No vamos a compartir tus datos con nadie.
               </div>
             </div>
             <div className="mb-3">
-              <label for="exampleInputPassword1" className="form-label">
-                Password
+              <label for="exampleInputPassword1" className="form-label" onChange={(e) => {
+                let data = form;
+                data.password = e.target.value
+                setForm(data)
+              }}>
+                Contraseña
               </label>
               <input
                 type="password"
@@ -64,9 +79,7 @@ const LoginModal = () => {
                 Check me out
               </label>
             </div>
-            <button type="submit" onClick={() => {
-              sessionStorage.setItem('loged', true);
-            }} className="btn btn-primary">
+            <button type="submit" className="btn btn-primary">
               Submit
             </button>
           </form>

@@ -27,7 +27,7 @@ class Documento(db.Model):
 
 class Anuncio(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    titulo = db.Column(db.String(1000), unique=True, nullable=False)
+    titulo = db.Column(db.String(1000), unique=False, nullable=False)
     detalle =db.Column(db.String(1500), unique=False, nullable=False)
     autor = db.Column(db.String(50), unique=False, nullable=False)
     nivel = db.Column(db.String(50), unique=False, nullable=False)
@@ -45,7 +45,7 @@ class Anuncio(db.Model):
 
 class Sms(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    destinatario = db.Column(db.String(15), unique=True, nullable=False)
+    destinatario = db.Column(db.String(15), unique=False, nullable=False)
     cuerpo =db.Column(db.String(1500), unique=False, nullable=False)
     funcionarioId = db.Column(db.Integer, db.ForeignKey('funcionario.id'))
 
@@ -64,7 +64,7 @@ class Funcionario(db.Model):
     apellido = db.Column(db.String(80), unique=False, nullable=False)
     permisos = db.Column(db.Boolean(), unique=False, nullable=False)
     telefono = db.Column(db.String(15), unique=True, nullable=False)#
-    direccion = db.Column(db.String(15), unique=True, nullable=False)#
+    direccion = db.Column(db.String(100), unique=True, nullable=False)#
     rol = db.Column(db.String(30), unique=True, nullable=False)#
     autor = db.relationship("Sms")
 
@@ -75,7 +75,8 @@ class Funcionario(db.Model):
             "nombre": self.nombre,
             "apellido": self.apellido,
             "telefono": self.telefono,
-            "direccion": self.direccion
+            "direccion": self.direccion,
+            "rol": self.rol
             # do not serialize the password, its a security breach
         }
 
@@ -114,6 +115,7 @@ class Apoderado(db.Model):
     ocupacion = db.Column(db.String(80), unique=False, nullable=False)
     maxNivelEducativo = db.Column(db.String(80), unique=False, nullable=False)
     fechanac = db.Column(db.Date, unique=False, nullable=False)
+    telefono = db.Column(db.String(15), unique=True, nullable=False)#
     apoderado = db.relationship("Ninio")
 
     def serialize(self):
@@ -126,6 +128,7 @@ class Apoderado(db.Model):
             "fechanac": self.fechanac,
             "maxNivelEducativo": self.maxNivelEducativo,
             "ocupacion": self.ocupacion,
+             "telefono": self.telefono,
             # do not serialize the password, its a security breach
         }
 
