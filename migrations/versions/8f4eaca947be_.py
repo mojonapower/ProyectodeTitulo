@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 0457f2e281b4
+Revision ID: 8f4eaca947be
 Revises: 
-Create Date: 2022-02-17 04:36:14.575839
+Create Date: 2022-02-23 01:23:29.869856
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '0457f2e281b4'
+revision = '8f4eaca947be'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -24,8 +24,7 @@ def upgrade():
     sa.Column('detalle', sa.String(length=1500), nullable=False),
     sa.Column('autor', sa.String(length=50), nullable=False),
     sa.Column('nivel', sa.String(length=50), nullable=False),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('titulo')
+    sa.PrimaryKeyConstraint('id')
     )
     op.create_table('apoderado',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -36,7 +35,9 @@ def upgrade():
     sa.Column('ocupacion', sa.String(length=80), nullable=False),
     sa.Column('maxNivelEducativo', sa.String(length=80), nullable=False),
     sa.Column('fechanac', sa.Date(), nullable=False),
-    sa.PrimaryKeyConstraint('id')
+    sa.Column('telefono', sa.String(length=15), nullable=False),
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('telefono')
     )
     op.create_table('documento',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -58,7 +59,7 @@ def upgrade():
     sa.Column('apellido', sa.String(length=80), nullable=False),
     sa.Column('permisos', sa.Boolean(), nullable=False),
     sa.Column('telefono', sa.String(length=15), nullable=False),
-    sa.Column('direccion', sa.String(length=15), nullable=False),
+    sa.Column('direccion', sa.String(length=100), nullable=False),
     sa.Column('rol', sa.String(length=30), nullable=False),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('direccion'),
@@ -84,8 +85,7 @@ def upgrade():
     sa.Column('cuerpo', sa.String(length=1500), nullable=False),
     sa.Column('funcionarioId', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['funcionarioId'], ['funcionario.id'], ),
-    sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('destinatario')
+    sa.PrimaryKeyConstraint('id')
     )
     # ### end Alembic commands ###
 

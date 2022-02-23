@@ -3,7 +3,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 import os
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, Documento, Anuncio,Sms,Funcionario, Apoderado
+from api.models import db, Documento, Anuncio,Sms,Funcionario, Apoderado,Ninio
 from api.utils import generate_sitemap, APIException
 from datetime import datetime
 import messagebird
@@ -50,21 +50,66 @@ def addAnnoucement():
 
 @api.route('/sendSMS', methods=['POST'])
 def sms():
-    body = request.get_json()
     client = messagebird.Client(os.getenv("ACCESS_KEY"))#disponible en .env
-    for i in range(len(body["numeros"])):
-        message = client.message_create(
-                'TestMessage',
-                body['numeros'][i],
-                body['mensaje'],
-                { 'reference' : 'Foobar' }
-            )
-        saveSms = Sms(destinatario= body['numeros'][i], cuerpo=body['mensaje'], funcionarioId=body['funcionarioId'])
-        db.session.add(saveSms)
-        db.session.commit()
-        #print(body["numeros"][i])
+    def send(array):
+        for i in range(len(array)):
+            message = client.message_create(
+                  'TestMessage',
+                  array[i].Apoderado.telefono,
+                  body['mensaje'],
+                  { 'reference' : 'Foobar' }
+              )
+            saveSms = Sms(destinatario= array[i].Apoderado.telefono, cuerpo=body['mensaje'], funcionarioId=body['funcionarioId'])
+            db.session.add(saveSms)
+            db.session.commit()
 
-    body["status"]= 200
+    body = request.get_json()
+    if(body['destinatarios']=='Sala Cuna Mayor '):
+
+        body["status"]= 201
+        return jsonify(body)
+        
+    elif(body['destinatarios']=='Sala Cuna'):
+        body["status"]= 202
+        return jsonify(body)
+
+    elif(body['destinatarios']=='Todos'):
+        body["status"]= 203
+        return jsonify(body)
+
+    elif(body['destinatarios']=='Medio Menor'):
+        join = db.session.query(Ninio,Apoderado).filter(Ninio.parent_id==Apoderado.id).all()
+        send(join)
+        
+
+        body["status"]= 204
+        return jsonify(body)
+
+    elif(body['destinatarios']==' Medios'):
+        body["status"]= 205
+        return jsonify(body)
+
+    elif(body['destinatarios']=='Medio Mayor'):
+        body["status"]= 206
+        return jsonify(body)
+
+    elif(body['destinatarios']=='Funcionario'):
+        body["status"]= 207
+        return jsonify(body)
+
+    elif(body['destinatarios']=='Funcionario Especifico'): #modificar estructura de request Body (otro action el flux :D)
+        body["status"]= 208
+        return jsonify(body)
+
+    elif(body['destinatarios']=='Apoderado Especifico'): #modificar estructura de request Body (otro action el flux :D)
+        body["status"]= 209
+        return jsonify(body)
+
+    
+     
+    #    #print(body["numeros"][i])
+
+    
     return jsonify(body),200
 
 
@@ -83,3 +128,10 @@ def apoderadosManagement():
         apoderado = Apoderado.query.all()
         apoderado = list(map(lambda x: x.serialize(), apoderado))
         return jsonify(apoderado), 200
+
+@api.route('/ninio', methods=['GET', 'POST'])
+def ninio():
+    if request.method =='GET':
+        ninio = Ninio.query.all()
+        ninio = list(map(lambda x: x.serialize(), ninio))
+        return jsonify(ninio), 200

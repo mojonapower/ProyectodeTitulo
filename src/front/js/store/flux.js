@@ -162,7 +162,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				myHeaders.append("Content-Type", "application/json");
 
 				let raw = JSON.stringify({
-					"numeros": data.destinatario,
+					"destinatarios": data.destinatario,
 					"mensaje": data.cuerpo,
 					"funcionarioId": 1 //cambiar cuando alguien más se registre
 				});
@@ -174,8 +174,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 					redirect: 'follow'
 				};
 
-				fetch(process.env.BACKEND_URL + "/api/sendSMS", requestOptions)
-					.then(response => response.text())
+				fetch("https://3001-mojonapower-proyectodeti-9tv7mpda6gb.ws-us33.gitpod.io/api/sendSMS", requestOptions)
+					.then(response => response.json())
 					.then(result => console.log(result))
 					.catch(error => console.log('error', error));
 			},
