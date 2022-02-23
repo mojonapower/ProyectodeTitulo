@@ -61,7 +61,7 @@ def sms():
               )
             saveSms = Sms(destinatario= array[i].Apoderado.telefono, cuerpo=body['mensaje'], funcionarioId=body['funcionarioId'])
             db.session.add(saveSms)
-            db.session.commit()
+            db.session.commit() 
 
     body = request.get_json()
     if(body['destinatarios']=='Sala Cuna Mayor '):
