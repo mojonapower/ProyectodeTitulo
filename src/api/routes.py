@@ -51,7 +51,7 @@ def addAnnoucement():
 @api.route('/sendSMS', methods=['POST'])
 def sms():
     client = messagebird.Client(os.getenv("ACCESS_KEY"))#disponible en .env
-    def send(array):
+    def sendApoderadoJoin(array):
         for i in range(len(array)):
             message = client.message_create(
                   'TestMessage',
@@ -74,14 +74,13 @@ def sms():
         return jsonify(body)
 
     elif(body['destinatarios']=='Todos'):
+        
         body["status"]= 203
         return jsonify(body)
 
     elif(body['destinatarios']=='Medio Menor'):
         join = db.session.query(Ninio,Apoderado).filter(Ninio.parent_id==Apoderado.id).all()
         send(join)
-        
-
         body["status"]= 204
         return jsonify(body)
 
@@ -105,12 +104,11 @@ def sms():
         body["status"]= 209
         return jsonify(body)
 
-    
+    else:
+        return jsonify("Error desconocido"),410
      
     #    #print(body["numeros"][i])
 
-    
-    return jsonify(body),200
 
 
 @api.route('/funcionarios', methods=['GET', 'POST'])
